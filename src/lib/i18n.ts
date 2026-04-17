@@ -3,7 +3,6 @@ export type Lang = "de" | "en";
 export const translations = {
   nav: {
     home: { de: "Home", en: "Home" },
-    story: { de: "Story", en: "Story" },
     stay: { de: "Aufenthalt", en: "Stay" },
     contact: { de: "Kontakt", en: "Contact" },
   },
