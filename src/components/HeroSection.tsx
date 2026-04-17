@@ -6,15 +6,12 @@ const HeroSection = () => {
   const { lang } = useLanguage();
 
   return (
-    // THE UNIFORM SPACING MATH:
-    // Mobile (32px frame): pt-28 (112px - 80px nav = 32px), pb-8 (32px), px-8 (32px)
-    // Desktop (48px frame): pt-32 (128px - 80px nav = 48px), pb-12 (48px), px-12 (48px)
-    // Ultrawide (64px frame): pt-36 (144px - 80px nav = 64px), pb-16 (64px), px-16 (64px)
-    <section id="home" className="w-full bg-background pt-28 pb-8 px-8 md:pt-32 md:pb-12 md:px-12 lg:pt-36 lg:pb-16 lg:px-16 flex justify-center">
+    // MOBILE FIX: Thinner 16px frame on mobile (px-4, pb-4, pt-24)
+    // Desktop remains mathematically perfect with the thicker frame
+    <section id="home" className="w-full bg-background pt-24 pb-4 px-4 md:pt-32 md:pb-12 md:px-12 lg:pt-36 lg:pb-16 lg:px-16 flex justify-center">
       
-      {/* The Image Container */}
-      {/* max-w-[1600px] ensures the uniform frame holds its shape even on massive monitors */}
-      <div className="relative w-full max-w-[1600px] h-[75vh] md:h-[80vh] overflow-hidden rounded-sm shadow-md">
+      {/* MOBILE FIX: Dropped mobile height to 65vh so the image doesn't look awkwardly tall and thin */}
+      <div className="relative w-full max-w-[1600px] h-[65vh] md:h-[80vh] overflow-hidden rounded-sm shadow-md">
         
         <div className="absolute inset-0 z-0">
           <img
@@ -27,22 +24,21 @@ const HeroSection = () => {
 
         <div className="relative z-10 flex flex-col items-center justify-center h-full text-center animate-fade-in-up px-4">
           
-          <p className="font-heading text-sm md:text-base tracking-[0.4em] text-primary-foreground/90 uppercase mb-4">
+          <p className="font-heading text-xs md:text-base tracking-[0.4em] text-primary-foreground/90 uppercase mb-4">
             {t(translations.hero.the, lang)}
           </p>
           
-          {/* Title & Line Wrapper */}
           <div className="flex flex-col items-center w-fit mx-auto mb-6">
-            <h1 className="font-heading text-5xl md:text-7xl lg:text-[5.5rem] font-semibold text-primary-foreground tracking-[0.1em] drop-shadow-lg mb-4">
+            {/* MOBILE FIX: text-4xl on mobile, and whitespace-nowrap prevents line breaks */}
+            <h1 className="font-heading text-4xl sm:text-5xl md:text-7xl lg:text-[5.5rem] font-semibold text-primary-foreground tracking-[0.1em] drop-shadow-lg mb-4 whitespace-nowrap">
               {t(translations.hero.name, lang)}
             </h1>
             
-            {/* The Horizontal Line (Matched to "KARLCHEN" width) */}
             <div className="w-full h-[1px] bg-white/70" />
           </div>
 
-          {/* Crisp White Tagline */}
-          <p className="font-heading text-lg md:text-2xl italic text-white font-light tracking-[0.15em] drop-shadow-md">
+          {/* MOBILE FIX: Smaller mobile tagline text */}
+          <p className="font-heading text-base md:text-2xl italic text-white font-light tracking-[0.15em] drop-shadow-md">
             {t(translations.hero.tagline, lang)}
           </p>
 
