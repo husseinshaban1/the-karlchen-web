@@ -1,42 +1,45 @@
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translations, t } from "@/lib/i18n";
-// Importing the exact icons we need for the amenities list
-import { Users, BedDouble, Wifi, Coffee } from "lucide-react"; 
-
-// NOTE: Update these imports to point to your actual room photos!
-import room1 from "@/assets/gallery-1.jpg"; 
-import room2 from "@/assets/gallery-2.jpg";
-import room3 from "@/assets/gallery-3.jpg";
+import { Users, Wifi, Coffee, BedDouble } from "lucide-react";
+// Ensure these paths match where your actual images are saved!
+import room1 from "@/assets/gallery-3.jpg";
+import room2 from "@/assets/gallery-1.jpg";
+import room3 from "@/assets/gallery-4.jpg";
 
 const RoomsSection = () => {
   const { lang } = useLanguage();
 
-  // We store the room data in an array so it's incredibly easy to edit later
   const rooms = [
     {
-      name: "Deluxe Room",
-      price: "150",
-      image: room1,
+      img: room1,
+      name: "Deluxe Room", 
+      price: 150,
+      guests: 2,
+      bed: "1 King Bed",
     },
     {
+      img: room2,
       name: "Junior Suite",
-      price: "220",
-      image: room2,
+      price: 220,
+      guests: 2,
+      bed: "1 King Bed",
     },
     {
+      img: room3,
       name: "Executive Suite",
-      price: "290",
-      image: room3,
+      price: 290,
+      guests: 2,
+      bed: "1 King Bed",
     },
   ];
 
   return (
-    <section id="stay" className="py-24 bg-background">
+    <section id="rooms" className="py-24 bg-background">
       <div className="container mx-auto px-4 md:px-8 lg:px-16 max-w-[1400px]">
         
-        {/* 1. Section Header */}
+        {/* Section Header */}
         <div className="text-center mb-16 animate-fade-in-up">
-          <h2 className="font-heading text-4xl md:text-5xl text-foreground mb-4">
+          <h2 className="font-heading font-normal text-4xl md:text-5xl text-foreground mb-4">
             Our Rooms
           </h2>
           <p className="font-heading italic text-lg md:text-xl text-muted-foreground font-light tracking-wide">
@@ -44,66 +47,75 @@ const RoomsSection = () => {
           </p>
         </div>
 
-        {/* 2. Three-Column Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+        {/* Room Grid - Increased gap to space the boxes out further */}
+        <div className="grid md:grid-cols-3 gap-8 md:gap-12 lg:gap-14">
           {rooms.map((room, index) => (
-            <div key={index} className="flex flex-col group animate-fade-in-up" style={{ animationDelay: `${index * 150}ms` }}>
+            /* THE BOX: Added a subtle border, background, and shadow to create the distinct card look */
+            <div 
+              key={room.name} 
+              className="flex flex-col group animate-fade-in-up bg-card/50 border border-border/50 rounded-sm shadow-sm overflow-hidden" 
+              style={{ animationDelay: `${index * 150}ms` }}
+            >
               
-              {/* Room Image */}
-              <div className="relative w-full aspect-[4/3] overflow-hidden mb-6 rounded-sm">
+              {/* Image Container - Flush to the top and sides of the box */}
+              <div className="relative w-full aspect-[4/3] overflow-hidden">
                 <img
-                  src={room.image}
+                  src={room.img}
                   alt={room.name}
-                  // This adds that luxury slow-zoom effect when you hover over the image
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  loading="lazy"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />
               </div>
 
-              {/* Room Content */}
-              <div className="flex flex-col flex-grow">
-                {/* Title */}
-                <h3 className="font-heading text-2xl md:text-3xl text-foreground mb-2">
+              {/* Text Content - Wrapped in padding (p-6) so it sits beautifully inside the box */}
+              <div className="flex flex-col flex-grow p-6 md:p-8">
+                
+                {/* MATCHED FONT: Using font-heading to make the title look identical to the screenshot */}
+                <h3 className="font-heading font-normal text-2xl md:text-[1.75rem] text-foreground mb-3 tracking-wide">
                   {room.name}
                 </h3>
-
-                {/* Price */}
-                <p className="font-body text-muted-foreground mb-6">
-                  From <span className="font-semibold text-foreground text-lg">€{room.price}</span> per night
+                
+                {/* MATCHED FONT: Price line is now entirely serif (font-heading) */}
+                <p className="font-heading text-muted-foreground text-sm md:text-[0.95rem] mb-6">
+                  From <span className="font-semibold text-foreground text-lg md:text-xl italic">€{room.price}</span> per night
                 </p>
 
-                {/* Amenities Block */}
-                <div className="space-y-3 mb-8 text-sm font-body text-muted-foreground">
-                  {/* Top Line: Guests, Bed, Wifi */}
-                  <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
-                    <span className="flex items-center gap-1.5">
-                      <Users size={16} strokeWidth={1.5} /> 2 Guests
+                {/* THE SUBTITLES: Tighter spacing (gap-2 instead of gap-3), smaller text, thinner icons */}
+                <div className="space-y-2 mb-8 text-[0.8rem] font-body text-muted-foreground/90 tracking-wide">
+                  
+                  {/* Top Line */}
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="flex items-center gap-1">
+                      <Users size={14} strokeWidth={1} /> {room.guests} {t(translations.rooms.guests, lang)}
                     </span>
-                    <span className="text-border/50">•</span>
-                    <span className="flex items-center gap-1.5">
-                      <BedDouble size={16} strokeWidth={1.5} /> 1 King Bed
+                    <span className="text-border/60 text-[0.6rem]">•</span>
+                    <span className="flex items-center gap-1">
+                      <BedDouble size={14} strokeWidth={1} /> {room.bed}
                     </span>
-                    <span className="text-border/50">|</span>
-                    <span className="flex items-center gap-1.5">
-                      <Wifi size={16} strokeWidth={1.5} /> Free Wi-Fi
+                    <span className="text-border/60 text-[0.6rem]">|</span>
+                    <span className="flex items-center gap-1">
+                      <Wifi size={14} strokeWidth={1} /> {t(translations.rooms.freeWifi, lang)}
                     </span>
                   </div>
-                  {/* Bottom Line: Breakfast */}
-                  <div className="flex items-center gap-1.5">
-                    <Coffee size={16} strokeWidth={1.5} /> Breakfast Included
+                  
+                  {/* Bottom Line */}
+                  <div className="flex items-center gap-1 text-[0.8rem]">
+                    <Coffee size={14} strokeWidth={1} /> 
+                    {lang === "de" ? "Frühstück Inklusive" : "Breakfast Included"}
                   </div>
                 </div>
 
-                {/* Button (Pushed to the bottom automatically by mt-auto) */}
-                {/* The bg-[#362D28] is the exact dark espresso brown from your screenshot */}
-                <button className="w-full mt-auto bg-[#362D28] hover:bg-[#251f1b] text-white font-body py-4 tracking-[0.1em] transition-colors uppercase text-sm rounded-sm">
-                  Check Availability
-                </button>
+                {/* Booking Button - Stays pushed to the bottom of the padded box */}
+                <a
+                  href="#booking"
+                  className="w-full mt-auto block text-center bg-[#362D28] hover:bg-[#251f1b] text-white font-body py-3.5 tracking-[0.15em] transition-colors uppercase text-xs rounded-sm"
+                >
+                  {t(translations.rooms.checkAvailability, lang)}
+                </a>
               </div>
-
             </div>
           ))}
         </div>
-
       </div>
     </section>
   );
